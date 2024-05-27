@@ -1,0 +1,18 @@
+.text-danger {
+    color: #aa4f58 !important;
+    background-color: #f8d7da;
+    padding: .70rem 1rem;
+}
+
+@font-face {
+    font-family: 'Marianne';
+    src: url('../fonts/Marianne/Marianne/fontes\ web/Marianne-Regular.woff') format('woff');
+}
+
+body {
+    font-family: 'Marianne', sans-serif;
+}
+
+#obligatoires {
+    color: #fb0019;
+}

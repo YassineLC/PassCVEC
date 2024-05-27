@@ -1,0 +1,14 @@
+img.logo {
+    height: 80px;
+}
+
+.navbar {
+    margin-bottom: 2rem;
+    padding: 0 20px;
+    background-color: rgb(39, 42, 58);
+}
+
+a.navbar-brand {
+    color: white;
+    margin-left: 2rem;
+}

@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Marianne';
+    src: url('../fonts/Marianne/Marianne/fontes\ web/Marianne-Regular.woff') format('woff');
+}
+
+body {
+    font-family: 'Marianne', sans-serif;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 940px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+

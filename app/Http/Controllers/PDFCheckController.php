@@ -33,11 +33,11 @@ class PDFCheckController extends Controller {
 
     private function verifyCodeValidity($code) {
         $client = new Client([
-            'verify' => 'C:\wamp64\www\passcvec\passcvec\storage\certificates\cacert.pem' // TODO: Modifier le chemin d'accès pour le chemin absolu plus tard
+            'verify' => storage_path('certificates/cacert.pem')
         ]);
 
         try {
-            $response = $client->get("https://cvec-ctrl.etudiant.gouv.fr/api/attestation/$code");
+            $response = $client->get("https://cve-2023-controle-prod.nuonet.fr/api/content_certificat$code");
             if ($response->getStatusCode() === 200) {
                 $data = json_decode($response->getBody()->getContents(), true);
                 return $data;

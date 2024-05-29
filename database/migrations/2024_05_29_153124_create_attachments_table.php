@@ -15,8 +15,8 @@ class CreateAttachmentsTable extends Migration
     {
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('post_id');
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->bigInteger('pass_cvec_request_id')->unsigned()->index();
+            $table->foreign('pass_cvec_request_id')->references('id')->on('pass_cvec_requests')->onDelete('cascade');
             $table->string('type')->nullable();
             $table->string('filename');
             $table->string('path');

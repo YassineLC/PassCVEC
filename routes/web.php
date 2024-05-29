@@ -16,13 +16,13 @@ use App\Http\Controllers\BackOfficeController;
 |
 */
 
-Route::get('/form', [PostController::class, 'index'])->name('form');
+Route::get('/', [PostController::class, 'index'])->name('form');
 Route::post('/store-form', [PostController::class, 'store'])->name('store-form');
 Route::get('/aide', [AideController::class, 'index'])->name('aide');
 
 Route::prefix('backoffice')->group(function() {
-    Route::get('/index', [BackOfficeController::class, 'index'])->name('backoffice.index');
-    Route::get('/index/{id}', [BackOfficeController::class, 'afficherDemande'])->name('backoffice.demande');
+    Route::get('/', [BackOfficeController::class, 'index'])->name('backoffice.index');
+    Route::get('/{id}', [BackOfficeController::class, 'afficherDemande'])->name('backoffice.demande');
 
     Route::prefix('assets')->group(function() {
         Route::get('pdf/scolarite/{id}', function ($id) {

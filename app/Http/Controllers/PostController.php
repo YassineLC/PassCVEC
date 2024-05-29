@@ -35,10 +35,10 @@ class PostController extends Controller
             if ($validator->fails()) {
                 throw new ValidationException($validator);
             }
-            
+
             $this->validate($request, (new PostRequest)->rules());
 
-            //Vérification de la validité du certificat CVEC
+            /* //Vérification de la validité du certificat CVEC
             $pdfFile = $request->file('cvec');
 
             // Vérifiez si le fichier PDF a été correctement téléchargé
@@ -58,7 +58,8 @@ class PostController extends Controller
             $ine = $apiResponse['ine'];
             if ($request->ine != $ine) {
                 throw ValidationException::withMessages(['ine' => 'Le numéro INE fourni n\' est pas valide.']);
-            }
+            } */
+            //TODO : Revoir la vérification de la validité du certificat CVEC
 
             $is_in_residence = $request->input('is_in_residence') === 'true' ? true : false;
 
@@ -107,7 +108,7 @@ class PostController extends Controller
                 $path = $file->storeAs("{$folder}", "{$post->nom}_{$post->prenom}_{$key}.{$file->getClientOriginalExtension()}", 'local_custom');
 
                 $attachment = new Attachment;
-                $attachment->post_id = $post->id;
+                $attachment->pass_cvec_request_id = $post->id;
                 $attachment->type = $key;
                 $attachment->filename = "{$post->nom}_{$post->prenom}_{$key}.{$file->getClientOriginalExtension()}";
                 $attachment->path = $path;

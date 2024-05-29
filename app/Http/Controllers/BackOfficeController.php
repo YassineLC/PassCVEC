@@ -47,7 +47,7 @@ class BackOfficeController extends Controller
 
     public static function getPath($id, $type) {
         $path = Attachment::where('type', $type)
-                          ->where('post_id', $id)
+                          ->where('pass_cvec_request_id', $id)
                           ->value('path');
 
         if ($path) {

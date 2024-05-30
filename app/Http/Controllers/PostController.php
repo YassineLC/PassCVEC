@@ -38,7 +38,7 @@ class PostController extends Controller
 
             $this->validate($request, (new PostRequest)->rules());
 
-            /* //Vérification de la validité du certificat CVEC
+            //Vérification de la validité du certificat CVEC
             $pdfFile = $request->file('cvec');
 
             // Vérifiez si le fichier PDF a été correctement téléchargé
@@ -55,11 +55,11 @@ class PostController extends Controller
                 throw ValidationException::withMessages(['cvec' => 'Le certificat CVEC soumis n\'est pas valide.']);
             }
 
-            $ine = $apiResponse['ine'];
+            preg_match('/(\d{9}[A-Z]{2})/', $apiResponse['content'], $matches);
+            $ine = $matches[0];
             if ($request->ine != $ine) {
                 throw ValidationException::withMessages(['ine' => 'Le numéro INE fourni n\' est pas valide.']);
-            } */
-            //TODO : Revoir la vérification de la validité du certificat CVEC
+            }
 
             $is_in_residence = $request->input('is_in_residence') === 'true' ? true : false;
 

@@ -33,14 +33,18 @@ class PDFCheckController extends Controller {
 
     private function verifyCodeValidity($code) {
         $client = new Client([
-            'verify' => storage_path('certificates/cacert.pem')
+            'verify' => false, //TODO : Remettre le certificat quand il sera disponible
         ]);
 
         try {
-            $response = $client->get("https://cve-2023-controle-prod.nuonet.fr/api/content_certificat$code");
+            $response = $client->get("https://cve-2023-controle-prod.nuonet.fr/api/content_certificat/$code");
             if ($response->getStatusCode() === 200) {
                 $data = json_decode($response->getBody()->getContents(), true);
-                return $data;
+                if ($data['message'] === 'le certificat est valide') {
+                    return $data;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }

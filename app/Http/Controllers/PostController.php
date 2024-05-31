@@ -6,7 +6,6 @@ use App\Models\Post;
 use App\Models\Attachment;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\LogementController;
 use App\Http\Controllers\PDFCheckController;

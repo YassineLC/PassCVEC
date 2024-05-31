@@ -5089,17 +5089,13 @@
         {
             "name": "symfony/css-selector",
             "version": "v7.1.0",
-            "version": "v7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
                 "reference": "843f2f7ac5e4c5bf0ec77daef23ca6d4d8922adc"
-                "reference": "843f2f7ac5e4c5bf0ec77daef23ca6d4d8922adc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/843f2f7ac5e4c5bf0ec77daef23ca6d4d8922adc",
-                "reference": "843f2f7ac5e4c5bf0ec77daef23ca6d4d8922adc",
                 "url": "https://api.github.com/repos/symfony/css-selector/zipball/843f2f7ac5e4c5bf0ec77daef23ca6d4d8922adc",
                 "reference": "843f2f7ac5e4c5bf0ec77daef23ca6d4d8922adc",
                 "shasum": ""
@@ -5138,7 +5134,6 @@
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/css-selector/tree/v7.1.0"
-                "source": "https://github.com/symfony/css-selector/tree/v7.1.0"
             },
             "funding": [
                 {
@@ -5154,7 +5149,6 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-18T09:32:20+00:00"
             "time": "2024-04-18T09:32:20+00:00"
         },
         {
@@ -5302,17 +5296,13 @@
         {
             "name": "symfony/event-dispatcher",
             "version": "v7.1.0",
-            "version": "v7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
                 "reference": "522d2772d6c7bab843b0c52466dc7844622bacc2"
-                "reference": "522d2772d6c7bab843b0c52466dc7844622bacc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/522d2772d6c7bab843b0c52466dc7844622bacc2",
-                "reference": "522d2772d6c7bab843b0c52466dc7844622bacc2",
                 "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/522d2772d6c7bab843b0c52466dc7844622bacc2",
                 "reference": "522d2772d6c7bab843b0c52466dc7844622bacc2",
                 "shasum": ""
@@ -5366,7 +5356,6 @@
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/event-dispatcher/tree/v7.1.0"
-                "source": "https://github.com/symfony/event-dispatcher/tree/v7.1.0"
             },
             "funding": [
                 {
@@ -5382,7 +5371,6 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-18T09:32:20+00:00"
             "time": "2024-04-18T09:32:20+00:00"
         },
         {
@@ -6911,17 +6899,13 @@
         {
             "name": "symfony/string",
             "version": "v7.1.0",
-            "version": "v7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
                 "reference": "6f41b185e742737917e6f2e3eca37767fba5f17a"
-                "reference": "6f41b185e742737917e6f2e3eca37767fba5f17a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/6f41b185e742737917e6f2e3eca37767fba5f17a",
-                "reference": "6f41b185e742737917e6f2e3eca37767fba5f17a",
                 "url": "https://api.github.com/repos/symfony/string/zipball/6f41b185e742737917e6f2e3eca37767fba5f17a",
                 "reference": "6f41b185e742737917e6f2e3eca37767fba5f17a",
                 "shasum": ""
@@ -6937,7 +6921,6 @@
                 "symfony/translation-contracts": "<2.5"
             },
             "require-dev": {
-                "symfony/emoji": "^7.1",
                 "symfony/emoji": "^7.1",
                 "symfony/error-handler": "^6.4|^7.0",
                 "symfony/http-client": "^6.4|^7.0",
@@ -6983,7 +6966,6 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/string/tree/v7.1.0"
-                "source": "https://github.com/symfony/string/tree/v7.1.0"
             },
             "funding": [
                 {
@@ -6999,7 +6981,6 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-17T10:55:18+00:00"
             "time": "2024-05-17T10:55:18+00:00"
         },
         {
@@ -10508,10 +10489,6 @@
             "time": "2024-05-02T13:42:49+00:00"
         },
         {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
             "name": "symfony/polyfill-php81",
             "version": "v1.29.0",
             "source": {
@@ -10590,18 +10567,6 @@
         {
             "name": "symfony/yaml",
             "version": "v7.1.0",
-            "version": "v7.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "c5f718c94e3c37dd77b77484e6cf0b524b2d405e"
-                "reference": "c5f718c94e3c37dd77b77484e6cf0b524b2d405e"
-            },
-            "dist": {
-                "type": "zip",
-=======
-            "name": "symfony/yaml",
-            "version": "v7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -10609,42 +10574,6 @@
             },
             "dist": {
                 "type": "zip",
->>>>>>> Stashed changes
-=======
-            "name": "symfony/yaml",
-            "version": "v7.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "c5f718c94e3c37dd77b77484e6cf0b524b2d405e"
-            },
-            "dist": {
-                "type": "zip",
->>>>>>> Stashed changes
-=======
-            "name": "symfony/yaml",
-            "version": "v7.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "c5f718c94e3c37dd77b77484e6cf0b524b2d405e"
-            },
-            "dist": {
-                "type": "zip",
->>>>>>> Stashed changes
-=======
-            "name": "symfony/yaml",
-            "version": "v7.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "c5f718c94e3c37dd77b77484e6cf0b524b2d405e"
-            },
-            "dist": {
-                "type": "zip",
->>>>>>> Stashed changes
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/c5f718c94e3c37dd77b77484e6cf0b524b2d405e",
-                "reference": "c5f718c94e3c37dd77b77484e6cf0b524b2d405e",
                 "url": "https://api.github.com/repos/symfony/yaml/zipball/c5f718c94e3c37dd77b77484e6cf0b524b2d405e",
                 "reference": "c5f718c94e3c37dd77b77484e6cf0b524b2d405e",
                 "shasum": ""
@@ -10689,7 +10618,6 @@
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/yaml/tree/v7.1.0"
-                "source": "https://github.com/symfony/yaml/tree/v7.1.0"
             },
             "funding": [
                 {
@@ -10705,7 +10633,6 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-28T18:29:00+00:00"
             "time": "2024-04-28T18:29:00+00:00"
         },
         {

@@ -10,22 +10,29 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\LogementController;
 use App\Http\Controllers\PDFCheckController;
 use Illuminate\Validation\ValidationException;
+use Jenssegers\Agent\Agent;
 
 class PostController extends Controller
 {
     protected $logementController;
     protected $pdfCheckController;
+    protected $agent;
 
-    public function __construct(LogementController $logementController, PDFCheckController $pdfCheckController)
+    public function __construct(LogementController $logementController, PDFCheckController $pdfCheckController, Agent $agent)
     {
         $this->logementController = $logementController;
         $this->pdfCheckController = $pdfCheckController;
+        $this->agent = $agent;
     }
 
     public function index()
     {
         $logements = $this->logementController->index();
-        return view('cvec-post-form', ['logements' => $logements]);
+        if ($this->agent->isMobile()) {
+            return view('cvec-post-form-mobile', ['logements' => $logements]);
+        } else {
+            return view('cvec-post-form', ['logements' => $logements]);
+        }
     }
 
     public function store(Request $request)
@@ -61,15 +68,12 @@ class PostController extends Controller
             $is_in_residence = $request->input('is_in_residence') === 'true';
 
             $post = new Post;
-            $post->nom = $request->nom;
-            $post->prenom = $request->prenom;
-            $post->ine = $request->ine;
-            $post->email = $request->email;
-            $post->adresse = $request->adresse;
-            $post->is_in_residence = $is_in_residence;
+            $data = $request->only(['nom', 'prenom', 'ine', 'email', 'adresse']);
+            $data['is_in_residence'] = $is_in_residence;
             if ($request->residence) {
                 $post->residence = $request->residence;
             }
+            $post->fill($data);
             $post->save();
 
             $this->handleAttachments($request, $post);
@@ -99,7 +103,7 @@ class PostController extends Controller
                         break;
                 }
 
-                $path = $file->storeAs("{$folder}", "{$post->nom}_{$post->prenom}_{$key}.{$file->getClientOriginalExtension()}", 'local_custom');
+                $path = $file->storeAs("{$folder}", "{$post->id}_{$key}.{$file->getClientOriginalExtension()}", 'local_custom');
 
                 $attachment = new Attachment;
                 $attachment->pass_cvec_request_id = $post->id;

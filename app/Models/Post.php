@@ -9,8 +9,8 @@ class Post extends Model
 {
     use HasFactory;
     protected $table = 'pass_cvec_requests' ;
-    protected $fillable = ['nom', 'prenom', 'ine', 'email', 'adresse'] ;
-
+    protected $fillable = ['nom', 'prenom', 'ine', 'email', 'adresse', 'is_in_residence', 'residence'];
+    
     public function attachments()
     {
         return $this->hasMany(Attachment::class);

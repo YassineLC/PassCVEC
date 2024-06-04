@@ -14,7 +14,7 @@
             <h1>Critères d'éligibilité au Pass CVEC</h1>
         </div>
     </header>
-    <main class="container mt-5">
+    <main class="container mt-5 mb-5">
         <section>
             <h2>Éligibilité</h2>
             <p>Le Pass CVEC du Crous de Versailles est <b>uniquement à destination de tous les étudiants du supérieur inscrits sur l’académie de Versailles et assujettis à la CVEC sur l’académie de Versailles (l’attestation CVEC doit commencer par VER).</b> Si ce n’est pas le cas, nous ne pouvons pas vous envoyer de Pass.</p>

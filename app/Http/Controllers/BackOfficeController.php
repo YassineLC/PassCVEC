@@ -11,21 +11,6 @@ class BackOfficeController extends Controller
     public function index(Request $request) {
         $query = Post::query();
 
-        // Filtrer par présence en résidence
-        if ($request->has('is_in_residence')) {
-            $query->where('is_in_residence', $request->input('is_in_residence'));
-        }
-
-        // Filtrer par nom
-        if ($request->has('search_nom')) {
-            $query->where('nom', 'like', '%' . $request->input('search_nom') . '%');
-        }
-
-        // Filtrer par prénom
-        if ($request->has('search_prenom')) {
-            $query->where('prenom', 'like', '%' . $request->input('search_prenom') . '%');
-        }
-
         $allRequests = $query->get();
 
         return view('backoffice', ['allRequests' => $allRequests]);

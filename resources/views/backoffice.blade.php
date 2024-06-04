@@ -15,35 +15,6 @@
     </header>
 
     <div class="container">
-        <form action="{{ route('backoffice.index') }}" method="GET" class="mb-4">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="is_in_residence">En résidence :</label>
-                        <select name="is_in_residence" id="is_in_residence" class="form-control">
-                            <option value="">Tous</option>
-                            <option value="1" {{ old('is_in_residence') == '1' ? 'selected' : '' }}>Oui</option>
-                            <option value="0" {{ old('is_in_residence') == '0' ? 'selected' : '' }}>Non</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="search_nom">Nom :</label>
-                        <input type="text" name="search_nom" id="search_nom" class="form-control" placeholder="Recherche par nom" value="{{ old('search_nom') }}">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="search_prenom">Prénom :</label>
-                        <input type="text" name="search_prenom" id="search_prenom" class="form-control" placeholder="Recherche par prénom" value="{{ old('search_prenom') }}">
-                    </div>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Filtrer</button>
-            <a href="{{ route('backoffice.index') }}" class="btn btn-secondary">Réinitialiser</a>
-        </form>
-
         <table class="table table-striped table-bordered mb-3">
             <thead class="thead-dark">
                 <tr>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AideController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\LabelController;
 use App\Http\Controllers\BackOfficeController;
 
 /*
@@ -47,3 +48,5 @@ Route::prefix('backoffice')->group(function() {
         })->name('assets.pdf.cvec');
     });
 });
+
+Route::get('/label', [LabelController::class, 'viewPdf'])->name('label');

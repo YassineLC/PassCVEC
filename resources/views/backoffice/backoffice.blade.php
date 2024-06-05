@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset("css/backoffice.css") }}">
+    <link rel="stylesheet" href="{{ asset('css/backoffice.css') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <title>Pass CVEC - BackOffice</title>
 </head>
@@ -24,6 +24,8 @@
                     <th>PRENOM</th>
                     <th>MAIL</th>
                     <th>ADRESSE</th>
+                    <th>CODE POSTAL</th>
+                    <th>VILLE</th>
                     <th>EN RESIDENCE</th>
                     <th>RESIDENCE</th>
                     <th>DATE DE CREATION</th>
@@ -38,6 +40,8 @@
                     <td>{{ $request->prenom }}</td>
                     <td>{{ $request->email }}</td>
                     <td>{{ $request->adresse }}</td>
+                    <td>{{ $request->code_postal }}</td>
+                    <td>{{ $request->ville }}</td>
                     <td>{{ $request->is_in_residence ? 'Oui' : 'Non' }}</td>
                     <td>{{ $request->residence ?? '-' }}</td>
                     <td>{{ \Carbon\Carbon::parse($request->created_at)->isoFormat('DD/MM/YYYY HH:mm:ss') }}</td>

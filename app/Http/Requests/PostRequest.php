@@ -27,7 +27,6 @@ class PostRequest extends FormRequest
             'prenom' => ['required'],
             'ine' => ['required', 'unique:pass_cvec_requests'],
             'email' => ['required', 'string', 'unique:pass_cvec_requests', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
-            'adresse' => ['required'],
             'scolarite' => ['required', 'mimes:pdf']
         ];
     }
@@ -48,7 +47,6 @@ class PostRequest extends FormRequest
             'email.required' => 'L\'email est requis.',
             'email.unique' => 'Cet email est déjà utilisé.',
             'email.regex' => 'Le format de l\'email est invalide.',
-            'adresse.required' => 'L\'adresse est requise.',
             'scolarite.required' => 'Le certificat de scolarité est requis.',
             'scolarite.mimes' => 'Le certificat de scolarité doit être un fichier PDF.',
             'cvec.required' => 'L\'attestation de paiement CVEC est requise.',

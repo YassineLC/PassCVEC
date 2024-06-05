@@ -19,7 +19,10 @@ class CreatePassCvecRequestsTable extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('email');
-            $table->string('adresse');
+            $table->string('adresse')->nullable();
+            $table->integer('code_postal');
+            $table->string('ville');
+            $table->integer('numero_chambre')->nullable();
             $table->boolean('is_in_residence');
             $table->string('residence')->nullable();
             $table->timestamps();

@@ -40,8 +40,12 @@
                 <td>{{ $data['email'] }}</td>
             </tr>
             <tr>
-                <td>Adresse</td>
-                <td>{{ $data['adresse'] }}</td>
+                <td>Code Postal</td>
+                <td>{{ $data['code_postal'] }}</td>
+            </tr>
+            <tr>
+                <td>Ville</td>
+                <td>{{ $data['ville'] }}</td>
             </tr>
             <tr>
                 <td>Résident logement Crous</td>
@@ -51,6 +55,15 @@
             <tr>
                 <td>Résidence</td>
                 <td>{{ $data['residence'] }}</td>
+            </tr>
+            <tr>
+                <td>Numéro de Chambre</td>
+                <td>{{ $data['numero_chambre'] }}</td>
+            </tr>
+            @else
+            <tr>
+                <td>Adresse</td>
+                <td>{{ $data['adresse'] }}</td>
             </tr>
             @endif
             <tr>
@@ -126,8 +139,6 @@
             window.open(pdfUrl, '_blank');
         }
     });
-
-
 
     const overlay = document.getElementById('overlay');
     const pdfModal = document.getElementById('pdfModal');

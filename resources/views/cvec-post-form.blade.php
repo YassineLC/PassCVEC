@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/cvec-post-form.css') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 <body>
     <div class="container mt-4 mb-4">
@@ -20,43 +21,49 @@
                 Formulaire Pass CVEC
             </div>
             <div class="card-body">
-                <form name="add-post-form" id="add-post-form" method="POST" action="{{url('store-form')}}" enctype="multipart/form-data">
+                <form name="add-post-form" id="add-post-form" method="POST" action="{{ url('store-form') }}" enctype="multipart/form-data">
                     @csrf
+                    <!-- Nom -->
                     <div class="form-group">
                         <label for="InputNom">Nom</label>
-                        <input type="text" id="nom" name="nom" class="form-control" required value ="{{ old('nom') }}" placeholder="Nom">
+                        <input type="text" id="nom" name="nom" class="form-control" required value="{{ old('nom') }}" placeholder="Nom">
                         @error("nom")
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <!-- Prénom -->
                     <div class="form-group">
                         <label for="InputPrenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" class="form-control" required value ="{{ old('prenom') }}" placeholder="Prénom">
+                        <input type="text" id="prenom" name="prenom" class="form-control" required value="{{ old('prenom') }}" placeholder="Prénom">
                         @error("prenom")
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <!-- INE -->
                     <div class="form-group">
-                        <label for="InputINE">INE</label>
-                        <input type="text" id="ine" name="ine" class="form-control" required value ="{{ old('ine') }}" placeholder="Numéro INE">
+                        <label for="InputINE">INE
+                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Votre numéro INE (Identifiant National Étudiant)"></i>
+                        </label>
+                        <input type="text" id="ine" name="ine" class="form-control" required value="{{ old('ine') }}" placeholder="Numéro INE">
                         @error("ine")
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <!-- Email -->
                     <div class="form-group">
-                        <label for="InputEmail">Mail</label>
-                        <input type="text" id="email" name="email" class="form-control" required value ="{{ old('email') }}" placeholder="exemple@email.com">
+                        <label for="InputEmail">Email
+                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Votre adresse email"></i>
+                        </label>
+                        <input type="email" id="email" name="email" class="form-control" required value="{{ old('email') }}" placeholder="exemple@email.com">
                         @error("email")
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="InputAdresse">Adresse</label>
-                        <input type="text" name="adresse" class="form-control" required value ="{{ old('adresse') }}" placeholder="10 Rue de l'Exemple">
-                        @error("adresse")
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+
+                    <!-- Résidence Crous -->
                     <div class="form-group" id="residence-radio">
                         <label for="resident_crous">Êtes-vous en résidence Crous ?</label>
                         <div class="form-check">
@@ -68,41 +75,90 @@
                             <label class="form-check-label" for="resident_crous_non">Non</label>
                         </div>
                     </div>
+
+                    <!-- Adresse -->
+                    <div class="form-group" id="adresse-div">
+                        <label for="InputAdresse">Adresse
+                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Votre adresse postale"></i>
+                        </label>
+                        <input type="text" id="adresse" name="adresse" class="form-control" placeholder="10 Rue de l'Exemple">
+                        @error("adresse")
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <input type="hidden" id="is_in_residence" name="is_in_residence" value="true">
-                    <div class="form-group" id ="div-logements">
-                        <label for="residence">Résidence</label>
-                        <select name="residence" id="residence" class="form-control" required onchange="disablePlaceholderOption()">
+
+                    <!-- Sélection de la résidence -->
+                    <div class="form-group" id="div-logements">
+                        <label for="residence">Résidence
+                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Sélectionnez votre résidence"></i>
+                        </label>
+                        <select name="residence" id="residence" class="form-control custom-select" onchange="disablePlaceholderOption()">
                             <option disabled selected hidden>Sélectionnez une résidence</option>
                             @foreach ($logements as $logement)
-                            <option value="{{ $logement['title'] /* $logement['id'] */ }}">
-                                {{ $logement['title'] }} @if(!empty($logement['short_desc'])) - {{ $logement['short_desc'] }} @endif
-                            </option>
+                                <option value="{{ $logement['title'] }}">{{ $logement['title'] }}@if(!empty($logement['short_desc'])) - {{ $logement['short_desc'] }}@endif</option>
                             @endforeach
                         </select>
                         @error("logement")
-                            <div class="text-danger"><div class="text-danger">{{ $message }}</div></div>
+                            <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <!-- Numéro de chambre -->
+                    <div class="form-group" id="room-number-fields">
+                        <label for="numero_chambre">Numéro de chambre
+                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Le numéro de chambre est nécessaire lors de l'envoi du pass"></i>
+                        </label>
+                        <input type="text" id="numero_chambre" name="numero_chambre" class="form-control">
+                    </div>
+
+
+                    <!-- Complément d'adresse -->
+                    <div class="form-group" id="address-fields">
+                        <label for="code_postal">Code postal</label>
+                        <input type="text" id="code_postal" name="code_postal" class="form-control" value="{{ old('code_postal') }}">
+                        <label for="ville">Ville</label>
+                        <input type="text" id="ville" name="ville" class="form-control" value="{{ old('ville') }}">
+                    </div>
+
+
+                    <!-- Certificat de scolarité -->
                     <div class="form-group">
-                        <label for="InputCertificatScolarite">Certificat de scolarité</label>
+                        <label for="InputCertificatScolarite">Certificat de scolarité
+                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Téléchargez votre certificat de scolarité"></i>
+                        </label>
                         <input type="file" name="scolarite" class="form-control" required>
                         @error("scolarite")
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <!-- Attestation de paiement CVEC -->
                     <div class="form-group">
-                        <label for="InputCertificatCVEC">Attestion de paiement CVEC</label>
+                        <label for="InputCertificatCVEC">Attestation de paiement CVEC
+                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Téléchargez votre attestation de paiement CVEC"></i>
+                        </label>
                         <input type="file" name="cvec" class="form-control" required>
                         @error("cvec")
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <p class="text-right" id="obligatoires">Tous les champs sont obligatoires</p>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{{ asset('js/cvec-post-form.js') }}"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </body>
 </html>

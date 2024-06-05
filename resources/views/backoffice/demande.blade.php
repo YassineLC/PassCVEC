@@ -12,7 +12,7 @@
 <body>
 
 <header>
-    @include('_navbar')
+    @include('backoffice/_navbar')
 </header>
 
 <div style="margin: 20px;">

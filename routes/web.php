@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AideController;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\BackOfficeController;
 
 /*

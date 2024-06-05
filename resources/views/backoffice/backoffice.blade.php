@@ -11,7 +11,7 @@
 <body>
 
     <header>
-        @include('_navbar')
+        @include('backoffice/_navbar')
     </header>
 
     <div class="container">

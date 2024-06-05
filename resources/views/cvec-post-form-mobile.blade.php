@@ -9,13 +9,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <style>
         body {
-            font-size: 1.1rem; /* Increase font size */
+            font-size: 1.1rem;
         }
         .form-control {
-            font-size: 1.1rem; /* Increase font size for inputs */
+            font-size: 1.1rem;
         }
         .card-header {
-            font-size: 1.3rem; /* Increase font size for card header */
+            font-size: 1.3rem;
         }
         .container {
             padding-left: 1rem;

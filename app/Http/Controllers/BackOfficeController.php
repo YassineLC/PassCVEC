@@ -13,7 +13,7 @@ class BackOfficeController extends Controller
 
         $allRequests = $query->get();
 
-        return view('backoffice', ['allRequests' => $allRequests]);
+        return view('backoffice/backoffice', ['allRequests' => $allRequests]);
     }
 
 
@@ -27,7 +27,7 @@ class BackOfficeController extends Controller
         $scolarite_path = $this->getPath($id, 'scolarite');
         $cvec_path = $this->getPath($id, 'cvec');
 
-        return view('demande', ['data' => $demande, 'scolarite_path' => $scolarite_path, 'cvec_path' => $cvec_path]);
+        return view('backoffice/demande', ['data' => $demande, 'scolarite_path' => $scolarite_path, 'cvec_path' => $cvec_path]);
     }
 
     public static function getPath($id, $type) {

@@ -11,11 +11,15 @@ class BackOfficeController extends Controller
     public function index(Request $request) {
         $query = Post::query();
 
-        $filters = ['nom', 'prenom', 'ine', 'id'];
+        $filters = ['nom', 'prenom', 'ine', 'id', 'statut'];
 
         foreach ($filters as $filter) {
             if ($request->filled($filter)) {
-                $query->where($filter, 'like', '%' . $request->input($filter) . '%');
+                if ($filter == 'statut') {
+                    $query->where($filter, '=', $request->input($filter));
+                } else {
+                    $query->where($filter, 'like', '%' . $request->input($filter) . '%');
+                }
             }
         }
 
@@ -33,34 +37,18 @@ class BackOfficeController extends Controller
         ]);
     }
 
+    public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'demande_ids' => 'required|array',
+            'status' => 'required|string'
+        ]);
 
+        $demandeIds = $request->input('demande_ids');
+        $status = $request->input('status');
 
-    public function afficherDemande($id) {
-        $demande = Post::find($id);
+        Post::whereIn('id', $demandeIds)->update(['statut' => $status]);
 
-        if (!$demande) {
-            abort(404);
-        }
-
-        $scolarite_path = $this->getPath($id, 'scolarite');
-        $cvec_path = $this->getPath($id, 'cvec');
-
-        return view('backoffice/demande', ['data' => $demande, 'scolarite_path' => $scolarite_path, 'cvec_path' => $cvec_path]);
-    }
-
-    public static function getPath($id, $type) {
-        $path = Attachment::where('type', $type)
-                          ->where('pass_cvec_request_id', $id)
-                          ->value('path');
-
-        if ($path) {
-            $document_path = storage_path("app/documents/{$path}");
-
-            if (file_exists($document_path)) {
-                return $document_path;
-            }
-        }
-
-        return null;
+        return redirect()->route('backoffice.index')->with('success', 'Statut des demandes mis à jour avec succès.');
     }
 }

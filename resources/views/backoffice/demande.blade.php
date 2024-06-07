@@ -24,6 +24,20 @@
                 <th>Valeur</th>
             </tr>
             <tr>
+                <td>Statut</td>
+                <td>
+                    @if($data['statut'] == 'A traiter')
+                        <span class="badge badge-success">A traiter</span>
+                    @elseif($data['statut'] == 'En cours')
+                        <span class="badge badge-warning">En cours</span>
+                    @elseif($data['statut'] == 'Traité')
+                        <span class="badge badge-danger">Traité</span>
+                    @else
+                        <span>{{ $data['statut'] }}</span>
+                    @endif
+                </td>
+            </tr>
+            <tr>
                 <td>Nom</td>
                 <td>{{ $data['nom'] }}</td>
             </tr>

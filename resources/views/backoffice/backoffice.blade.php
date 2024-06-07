@@ -14,7 +14,51 @@
         @include('backoffice/_navbar')
     </header>
 
-    <div class="container">
+    <div class="container-fluid">
+
+        <div class="d-flex justify-content-start mb-4 status-card-container">
+            <div class="status-card status-green">
+                <h3>{{ $incomingRequests ?? 0 }}</h3>
+                <p>Demandes à traiter</p>
+            </div>
+            <div class="status-card status-orange">
+                <h3>{{ $pendingRequests ?? 0 }}</h3>
+                <p>Demandes en cours</p>
+            </div>
+            <div class="status-card status-red">
+                <h3>{{ $assignedRequestsCount ?? 0 }}</h3>
+                <p>Demandes traités</p>
+            </div>
+        </div>
+
+        <div class="filter-container">
+            <form method="GET" action="{{ route('backoffice.index') }}" class="form-inline">
+                <div class="form-group mr-2">
+                    <label for="nom">Nom:</label>
+                    <input type="text" name="nom" id="nom" class="form-control ml-1" value="{{ request('nom') }}">
+                </div>
+                <div class="form-group mr-2">
+                    <label for="prenom">Prénom:</label>
+                    <input type="text" name="prenom" id="prenom" class="form-control ml-1" value="{{ request('prenom') }}">
+                </div>
+                <div class="form-group mr-2">
+                    <label for="ine">INE:</label>
+                    <input type="text" name="ine" id="ine" class="form-control ml-1" value="{{ request('ine') }}">
+                </div>
+                <div class="form-group mr-2">
+                    <label for="id">ID:</label>
+                    <input type="text" name="id" id="id" class="form-control ml-1" value="{{ request('id') }}">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary mr-2">Rechercher</button>
+                    <a href="{{ route('backoffice.index') }}" class="btn btn-secondary">Réinitialiser</a>
+                </div>
+            </form>
+        </div>
+
+
+
+
         <table class="table table-striped table-bordered mb-3">
             <thead class="thead-dark">
                 <tr>
@@ -28,6 +72,7 @@
                     <th>VILLE</th>
                     <th>EN RESIDENCE</th>
                     <th>RESIDENCE</th>
+                    <th>STATUT</th>
                     <th>DATE DE CREATION</th>
                 </tr>
             </thead>
@@ -39,11 +84,22 @@
                     <td>{{ $request->nom }}</td>
                     <td>{{ $request->prenom }}</td>
                     <td>{{ $request->email }}</td>
-                    <td>{{ $request->adresse }}</td>
+                    <td>{{ $request->adresse ?? '-' }}</td>
                     <td>{{ $request->code_postal }}</td>
                     <td>{{ $request->ville }}</td>
                     <td>{{ $request->is_in_residence ? 'Oui' : 'Non' }}</td>
                     <td>{{ $request->residence ?? '-' }}</td>
+                    <td>
+                        @if($request->statut == 'A traiter')
+                            <span class="badge badge-success">A traiter</span>
+                        @elseif($request->statut == 'En cours')
+                            <span class="badge badge-warning">En cours</span>
+                        @elseif($request->statut == 'Traité')
+                            <span class="badge badge-danger">Traité</span>
+                        @else
+                            <span>{{ $request->statut }}</span>
+                        @endif
+                    </td>
                     <td>{{ \Carbon\Carbon::parse($request->created_at)->isoFormat('DD/MM/YYYY HH:mm:ss') }}</td>
                 </tr>
                 @endforeach

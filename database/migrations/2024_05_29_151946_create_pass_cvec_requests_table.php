@@ -25,6 +25,7 @@ class CreatePassCvecRequestsTable extends Migration
             $table->integer('numero_chambre')->nullable();
             $table->boolean('is_in_residence');
             $table->string('residence')->nullable();
+            $table->string('statut')->default('A traiter');
             $table->timestamps();
         });
     }

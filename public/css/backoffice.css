@@ -7,21 +7,60 @@ body {
     font-family: 'Marianne', sans-serif;
 }
 
-@media (min-width: 768px) {
-  .container {
-    max-width: 940px;
-  }
+.status-icon {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px;
 }
 
-@media (min-width: 992px) {
-  .container {
-    max-width: 1140px;
-  }
+.status-a-traiter {
+    background-color: green;
 }
 
-@media (min-width: 1200px) {
-  .container {
-    max-width: 1320px;
-  }
+.status-en-cours {
+    background-color: orange;
+}
+
+.status-traite {
+    background-color: red;
+}
+
+.status-card {
+    display: inline-block;
+    width: 16%;
+    padding: 10px;
+    color: white;
+    margin-right: 10px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
+}
+
+.status-green { background-color: #28a745; }
+.status-orange { background-color: #fd7e14; }
+.status-red { background-color: #dc3545; }
+
+.table {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filter-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.filter-group {
+    display: flex;
+    align-items: center;
+}
+.filter-group .form-control, .filter-group .btn {
+    margin-right: 10px;
+}
+.filter-group:last-child .form-control, .filter-group:last-child .btn {
+    margin-right: 0;
 }
 

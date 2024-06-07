@@ -38,52 +38,62 @@ class PostController extends Controller
     public function store(Request $request)
     {
         try {
-                $validator = Validator::make($request->all(), (new PostRequest)->rules(), (new PostRequest)->messages());
+            // Récupération des règles et messages de validation
+            $postRequest = new PostRequest();
+            $rules = $postRequest->rules();
+            $messages = $postRequest->messages();
 
-                if ($validator->fails()) {
-                    throw new ValidationException($validator);
-                }
+            // Validation des données
+            $validator = Validator::make($request->all(), $rules, $messages);
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
+            }
 
-                $this->validate($request, (new PostRequest)->rules());
+            // Validation spécifique pour le fichier PDF 'cvec'
+            $pdfFile = $request->file('cvec');
+            if (!$pdfFile) {
+                throw ValidationException::withMessages(['cvec' => 'Veuillez soumettre un fichier PDF valide.']);
+            }
 
-                $pdfFile = $request->file('cvec');
+            // Vérification du contenu du fichier PDF via API
+            $pdfFilePath = $pdfFile->path();
+            $apiResponse = $this->pdfCheckController->checkCVEC($pdfFilePath);
+            if (!$apiResponse) {
+                throw ValidationException::withMessages(['cvec' => 'Le certificat CVEC soumis n\'est pas valide.']);
+            }
 
-                if (!$pdfFile) {
-                    throw ValidationException::withMessages(['cvec' => 'Veuillez soumettre un fichier PDF valide.']);
-                }
+            // Extraction et vérification du numéro INE
+            preg_match('/(\d{9}[A-Z]{2})/', $apiResponse['content'], $matches);
+            $ine = $matches[0] ?? null; // Ajout d'une vérification de l'existence d'une correspondance
+            if ($request->ine != $ine) {
+                throw ValidationException::withMessages(['ine' => 'Le numéro INE fourni n\'est pas valide.']);
+            }
 
-                $pdfFilePath = $pdfFile->path();
-                $apiResponse = $this->pdfCheckController->checkCVEC($pdfFilePath);
+            // Traitement de la résidence
+            $isInResidence = $request->input('is_in_residence') === 'true';
 
-                if (!$apiResponse) {
-                    throw ValidationException::withMessages(['cvec' => 'Le certificat CVEC soumis n\'est pas valide.']);
-                }
+            // Préparation des données pour l'insertion
+            $data = $request->only(['nom', 'prenom', 'ine', 'email', 'adresse', 'code_postal', 'ville', 'numero_chambre']);
+            $data['is_in_residence'] = $isInResidence;
+            if ($request->residence) {
+                $data['residence'] = $request->residence;
+            }
 
-                preg_match('/(\d{9}[A-Z]{2})/', $apiResponse['content'], $matches);
-                $ine = $matches[0];
-                if ($request->ine != $ine) {
-                    throw ValidationException::withMessages(['ine' => 'Le numéro INE fourni n\'est pas valide.']);
-                }
+            // Insertion des données
+            $post = new Post;
+            $post->fill($data);
+            $post->save();
 
-                $is_in_residence = $request->input('is_in_residence') === 'true';
+            // Gestion des pièces jointes
+            $this->handleAttachments($request, $post);
 
-                $post = new Post;
-                $data = $request->only(['nom', 'prenom', 'ine', 'email', 'adresse', 'code_postal', 'ville', 'numero_chambre']);
-                $data['is_in_residence'] = $is_in_residence;
-                if ($request->residence) {
-                    $post->residence = $request->residence;
-                }
-                $post->fill($data);
-                $post->save();
-
-                $this->handleAttachments($request, $post);
-
-                return back()->with('success', 'La demande a bien été enregistrée.');
+            return back()->with('success', 'La demande a bien été enregistrée.');
         } catch (ValidationException $e) {
                 $errors = $e->validator->errors();
                 return back()->withErrors($errors)->withInput();
             }
     }
+
 
 
     private function handleAttachments(Request $request, Post $post)

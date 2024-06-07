@@ -8,13 +8,31 @@ use Illuminate\Http\Request;
 
 class BackOfficeController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
         $query = Post::query();
+
+        $filters = ['nom', 'prenom', 'ine', 'id'];
+
+        foreach ($filters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, 'like', '%' . $request->input($filter) . '%');
+            }
+        }
 
         $allRequests = $query->get();
 
-        return view('backoffice/backoffice', ['allRequests' => $allRequests]);
+        $incomingRequests = Post::where('statut', 'A traiter')->count();
+        $pendingRequests = Post::where('statut', 'En cours')->count();
+        $assignedRequests = Post::where('statut', 'Traité')->count();
+
+        return view('backoffice/backoffice', [
+            'allRequests' => $allRequests,
+            'incomingRequests' => $incomingRequests,
+            'pendingRequests' => $pendingRequests,
+            'assignedRequests' => $assignedRequests,
+        ]);
     }
+
 
 
     public function afficherDemande($id) {

@@ -31,6 +31,7 @@
         </div>
     </div>
 
+    <div class="sticky-top">
     <div class="filter-container">
         <form method="GET" action="{{ route('backoffice.index') }}" class="form-inline">
             <div class="form-group mr-2">
@@ -63,20 +64,21 @@
                 <a href="{{ route('backoffice.index') }}" class="btn btn-secondary">Réinitialiser</a>
             </div>
         </form>
-    </div>
 
-    <form action="{{ route('backoffice.updateStatus') }}" method="POST">
-        @csrf
-        <div class="mb-3 d-flex align-items-center">
-            <label for="status" class="form-label mr-2">Changer le statut des demandes sélectionnées :</label>
-            <select id="status" name="status" class="form-control form-control-sm w-auto mr-2" style="width: auto;" required>
-                <option value="" disabled selected></option>
-                <option value="A traiter">A traiter</option>
-                <option value="En cours">En cours</option>
-                <option value="Traité">Traité</option>
-            </select>
-            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+        <form action="{{ route('backoffice.updateStatus') }}" method="POST">
+            @csrf
+            <div class="mt-3 d-flex align-items-center">
+                <label for="status" class="form-label mr-2">Changer le statut des demandes sélectionnées :</label>
+                <select id="status" name="status" class="form-control form-control-sm w-auto mr-2" style="width: auto;" required>
+                    <option value="" disabled selected></option>
+                    <option value="A traiter">A traiter</option>
+                    <option value="En cours">En cours</option>
+                    <option value="Traité">Traité</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Mettre à jour</button>
+            </div>
         </div>
+    </div>
 
 
 
@@ -128,6 +130,8 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{ $allRequests->links() }}
     </form>
 </div>
 

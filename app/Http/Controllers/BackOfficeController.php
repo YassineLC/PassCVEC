@@ -23,7 +23,7 @@ class BackOfficeController extends Controller
             }
         }
 
-        $allRequests = $query->get();
+        $allRequests = $query->paginate(15);
 
         $incomingRequests = Post::where('statut', 'A traiter')->count();
         $pendingRequests = Post::where('statut', 'En cours')->count();

@@ -70,3 +70,8 @@ body {
     margin-right: 0;
 }
 
+nav {
+    display: flex;
+    justify-content: center;
+}
+

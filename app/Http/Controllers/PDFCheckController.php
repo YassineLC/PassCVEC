@@ -33,7 +33,7 @@ class PDFCheckController extends Controller {
 
     private function verifyCodeValidity($code) {
         $client = new Client([
-            'verify' => false, //TODO : Remettre le certificat quand il sera disponible
+            'verify' => storage_path('cacert.pem')
         ]);
 
         try {

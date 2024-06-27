@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Attachment;
+use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
+use App\Mail\ConfirmationMail;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\LogementController;
 use App\Http\Controllers\PDFCheckController;
 use Illuminate\Validation\ValidationException;
-use Jenssegers\Agent\Agent;
 
 class PostController extends Controller
 {
@@ -86,6 +88,9 @@ class PostController extends Controller
 
             // Gestion des pièces jointes
             $this->handleAttachments($request, $post);
+
+            // Envoi de la confirmation par email
+            Mail::to($data['email'])->send(new ConfirmationMail($data));
 
             return back()->with('success', 'La demande a bien été enregistrée.');
         } catch (ValidationException $e) {

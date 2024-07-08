@@ -3,9 +3,8 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
+use Asahasrabuddhe\LaravelMJML\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ConfirmationMail extends Mailable
 {
@@ -30,7 +29,10 @@ class ConfirmationMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.confirmation')
-                    ->subject('Confirmation de votre demande Pass CVEC');
+        return $this->mjml('mail.test')
+                    ->subject('Votre demande a bien été reçue')
+                    ->with([
+                        'data' => $this->data
+                    ]);
     }
 }

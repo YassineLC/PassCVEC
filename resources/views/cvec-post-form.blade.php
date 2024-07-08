@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg">
+        <a href="{{ route('form') }}" class="navbar-brand">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo Crous de Versailles" class="logo img-fluid">
+        <h1 class="navbar-brand">Pass CVEC</h1>
+        </a>
+    </nav>
+
     <div class="container mt-4 mb-4">
         @if(session('success'))
             <div class="alert alert-success">

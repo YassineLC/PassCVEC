@@ -16,3 +16,23 @@ body {
 #obligatoires {
     color: #fb0019;
 }
+
+img.logo {
+    height: 80px;
+}
+
+.navbar {
+    margin-bottom: 2rem;
+    padding: 10px 20px;
+    background-color: rgb(39, 42, 58);
+}
+
+a.navbar-brand {
+    color: white;
+    margin-left: 2rem;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+}

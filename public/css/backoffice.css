@@ -50,22 +50,24 @@ body {
 
 .table {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0 !important;
 }
 
 .filter-container {
     background-color: #f8f9fa;
     padding: 20px;
-    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
 }
+
 .filter-group {
     display: flex;
     align-items: center;
 }
+
 .filter-group .form-control, .filter-group .btn {
     margin-right: 10px;
 }
+
 .filter-group:last-child .form-control, .filter-group:last-child .btn {
     margin-right: 0;
 }
@@ -75,3 +77,21 @@ nav {
     justify-content: center;
 }
 
+.table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0 5px 0;
+    background-color: #f8f9fa;
+    position: sticky;
+    bottom: 0;
+}
+
+.footer-left, .footer-center, .footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.footer-left select {
+    margin-right: 5px;
+}

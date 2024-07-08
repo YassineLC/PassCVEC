@@ -86,6 +86,8 @@ class PostController extends Controller
             $post->fill($data);
             $post->save();
 
+            $data['demande_id'] = $post->id;
+
             // Gestion des pièces jointes
             $this->handleAttachments($request, $post);
 

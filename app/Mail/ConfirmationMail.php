@@ -29,7 +29,7 @@ class ConfirmationMail extends Mailable
      */
     public function build()
     {
-        return $this->mjml('mail.test')
+        return $this->mjml('mail.confirmation')
                     ->subject('Votre demande a bien été reçue')
                     ->with([
                         'data' => $this->data

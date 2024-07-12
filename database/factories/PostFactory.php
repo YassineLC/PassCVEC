@@ -29,6 +29,7 @@ class PostFactory extends Factory
             'is_in_residence' => $this->faker->boolean,
             'residence' => $this->faker->boolean ? $this->faker->word : null,
             'statut' => $this->faker->randomElement(['A traiter', 'En cours', 'Traité']),
+            'is_sub_to_newsletter' => $this->faker->boolean,
             'created_at' => now(),
             'updated_at' => now(),
         ];

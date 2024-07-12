@@ -152,12 +152,23 @@
                         @enderror
                     </div>
 
+                    <!-- Newsletter -->
+                    <div class="form-group form-check mt-4">
+                        <input class="form-check-input" type="checkbox" name="newsletter" value="">
+                        <label for="newsletter_subscription form-check-label">Je souhaite recevoir la newsletter du pass CVEC</label>
+                    </div>
                     <p class="text-right" id="obligatoires">Tous les champs sont obligatoires</p>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
             </div>
         </div>
     </div>
+    <footer class="footer navbar navbar-expand-lg pb-4 pt-4">
+        <div class="mx-auto">
+            <a href="{{ route('mentions-legales') }}" class="nav-link">Mentions légales</a>
+        </div>
+    </footer>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

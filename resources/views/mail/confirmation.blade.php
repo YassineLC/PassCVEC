@@ -30,4 +30,4 @@
         </mj-column>
       </mj-section>
     </mj-body>
-  </mjml>
+</mjml>

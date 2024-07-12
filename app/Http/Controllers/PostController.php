@@ -77,6 +77,7 @@ class PostController extends Controller
             // Préparation des données pour l'insertion
             $data = $request->only(['nom', 'prenom', 'ine', 'email', 'adresse', 'code_postal', 'ville', 'numero_chambre']);
             $data['is_in_residence'] = $isInResidence;
+            $data['is_sub_to_newsletter'] = $request->has('newsletter');
             if ($request->residence) {
                 $data['residence'] = $request->residence;
             }
@@ -96,9 +97,9 @@ class PostController extends Controller
 
             return back()->with('success', 'La demande a bien été enregistrée.');
         } catch (ValidationException $e) {
-                $errors = $e->validator->errors();
-                return back()->withErrors($errors)->withInput();
-            }
+            $errors = $e->validator->errors();
+            return back()->withErrors($errors)->withInput();
+        }
     }
 
 

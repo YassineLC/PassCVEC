@@ -36,3 +36,29 @@ h1 {
     color: white;
     text-align: center;
 }
+
+footer.footer {
+    padding: 10px 20px;
+    background-color: rgb(39, 42, 58);
+    color: white;
+    margin-bottom: 0;
+    margin-top: 4rem;
+}
+
+footer.footer a.footer-brand {
+    color: white;
+}
+
+footer.footer .nav-link {
+    color: white;
+    text-align: center;
+    transition: 0.2s;
+}
+
+footer.footer .nav-link:hover {
+    color: #0056b3;
+}
+
+footer.footer img.logo {
+    height: 80px;
+}

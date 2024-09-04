@@ -36,4 +36,29 @@ class BackOfficeDemandeController extends Controller
 
         return null;
     }
+
+    public function updateRequestStatus(Request $request, $id)
+    {
+        // Validation du statut
+        $request->validate([
+            'status' => 'required|string|in:A traiter,En cours,Traité',
+        ]);
+
+        // Récupérer la demande par son ID
+        $demande = Post::find($id);
+
+        // Vérifiez si la demande existe
+        if (!$demande) {
+            return redirect()->back()->withErrors(['error' => 'Demande non trouvée.']);
+        }
+
+        // Mettre à jour le statut
+        $demande->statut = $request->input('status');
+        $demande->save();
+
+        // Rediriger avec un message de succès
+        return redirect()->route('backoffice.demande', ['id' => $id])->with('success', 'Statut mis à jour avec succès.');
+    }
+
+
 }

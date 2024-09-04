@@ -94,7 +94,20 @@
             </tr>
 
         </table>
-        <a href="{{ url()->previous() }}"><button class="btn btn-primary">Retour</button></a>
+        <form action="{{ route('backoffice.updateRequestStatus', ['id' => $data['id']]) }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="new-status">Changer le statut :</label>
+                <select id="new-status" name="status" class="form-control w-auto">
+                    <option value="A traiter" {{ $data['statut'] == 'A traiter' ? 'selected' : '' }}>A traiter</option>
+                    <option value="En cours" {{ $data['statut'] == 'En cours' ? 'selected' : '' }}>En cours</option>
+                    <option value="Traité" {{ $data['statut'] == 'Traité' ? 'selected' : '' }}>Traité</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Mettre à jour le statut</button>
+        </form>
+
+        <a href="{{ route('backoffice.index') }}"><button class="btn btn-primary">Retour</button></a>
     </div>
 </div>
 

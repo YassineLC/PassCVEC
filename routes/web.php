@@ -18,6 +18,7 @@ Route::prefix('backoffice')->group(function() {
     Route::get('/', [BackOfficeController::class, 'index'])->name('backoffice.index');
     Route::get('/{id}', [BackOfficeDemandeController::class, 'afficherDemande'])->name('backoffice.demande')->where('id', '[0-9]+');
     Route::post('/update-status', [BackOfficeController::class, 'updateStatus'])->name('backoffice.updateStatus');
+    Route::post('/update-request-status/{id}', [BackOfficeDemandeController::class, 'updateRequestStatus'])->name('backoffice.updateRequestStatus');
     Route::get('/create-mail', [CreateMailController::class, 'index'])->name('backoffice.test');
     Route::post('/send-newsletter', [CreateMailController::class, 'send'])->name('send-newsletter');
 

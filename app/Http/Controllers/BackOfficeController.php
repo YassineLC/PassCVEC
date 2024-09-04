@@ -23,10 +23,16 @@ class BackOfficeController extends Controller
             }
         }
 
+        // Exclure les demandes traitées par défaut, sauf si 'statut' est spécifié
+        if (!$request->filled('statut')) {
+            $query->where('statut', '!=', 'Traité');
+        }
+
         // Pagination
         $rowsPerPage = $request->input('rowsPerPage', 25);
         $allRequests = $query->paginate($rowsPerPage);
 
+        // Compter les demandes par statut
         $incomingRequests = Post::where('statut', 'A traiter')->count();
         $pendingRequests = Post::where('statut', 'En cours')->count();
         $assignedRequests = Post::where('statut', 'Traité')->count();
@@ -38,6 +44,7 @@ class BackOfficeController extends Controller
             'assignedRequests' => $assignedRequests,
         ]);
     }
+
 
 
     public function updateStatus(Request $request)

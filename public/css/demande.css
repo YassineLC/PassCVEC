@@ -20,3 +20,7 @@ body {
 #details-table th {
     background-color: #f2f2f2;
 }
+
+html body div div.container form button.btn.btn-primary.update-button {
+    margin-bottom: 10px;
+}

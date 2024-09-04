@@ -104,7 +104,7 @@
                     <option value="Traité" {{ $data['statut'] == 'Traité' ? 'selected' : '' }}>Traité</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Mettre à jour le statut</button>
+            <button type="submit" class="btn btn-primary update-button">Mettre à jour le statut</button>
         </form>
 
         <a href="{{ route('backoffice.index') }}"><button class="btn btn-primary">Retour</button></a>

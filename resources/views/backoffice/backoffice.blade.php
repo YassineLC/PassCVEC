@@ -34,37 +34,38 @@
     <div class="content-wrapper">
         <div class="sticky-top">
             <div class="filter-container">
-                <form method="GET" action="{{ route('backoffice.index') }}" class="form-inline">
-                    <div class="form-group mr-2">
-                        <label for="nom">Nom:</label>
-                        <input type="text" name="nom" id="nom" class="form-control ml-1" value="{{ request('nom') }}">
+                <form method="GET" action="{{ route('backoffice.index') }}" class="form-inline flex-wrap">
+                    <div class="form-group mr-3 mb-2">
+                        <label for="nom" class="mr-1">Nom:</label>
+                        <input type="text" name="nom" id="nom" class="form-control" value="{{ request('nom') }}">
                     </div>
-                    <div class="form-group mr-2">
-                        <label for="prenom">Prénom:</label>
-                        <input type="text" name="prenom" id="prenom" class="form-control ml-1" value="{{ request('prenom') }}">
+                    <div class="form-group mr-3 mb-2">
+                        <label for="prenom" class="mr-1">Prénom:</label>
+                        <input type="text" name="prenom" id="prenom" class="form-control" value="{{ request('prenom') }}">
                     </div>
-                    <div class="form-group mr-2">
-                        <label for="ine">INE:</label>
-                        <input type="text" name="ine" id="ine" class="form-control ml-1" value="{{ request('ine') }}">
+                    <div class="form-group mr-3 mb-2">
+                        <label for="ine" class="mr-1">INE:</label>
+                        <input type="text" name="ine" id="ine" class="form-control" value="{{ request('ine') }}">
                     </div>
-                    <div class="form-group mr-2">
-                        <label for="id">ID:</label>
-                        <input type="text" name="id" id="id" class="form-control ml-1" value="{{ request('id') }}">
+                    <div class="form-group mr-3 mb-2">
+                        <label for="id" class="mr-1">ID:</label>
+                        <input type="text" name="id" id="id" class="form-control" value="{{ request('id') }}">
                     </div>
-                    <div class="form-group mr-2">
-                        <label for="statut">Statut: </label>
-                        <select id="statut" name="statut" class="form-control w-auto ml-1" style="width: auto;">
+                    <div class="form-group mr-3 mb-2">
+                        <label for="statut" class="mr-1">Statut: </label>
+                        <select id="statut" name="statut" class="form-control w-auto" style="width: auto;">
                             <option value="" disabled selected></option>
                             <option value="A traiter">A traiter</option>
                             <option value="En cours">En cours</option>
                             <option value="Traité">Traité</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-2">
                         <button type="submit" class="btn btn-primary mr-2">Rechercher</button>
                         <a href="{{ route('backoffice.index') }}" class="btn btn-secondary">Réinitialiser</a>
                     </div>
                 </form>
+
 
                 <form action="{{ route('backoffice.updateStatus') }}" method="POST">
                     @csrf

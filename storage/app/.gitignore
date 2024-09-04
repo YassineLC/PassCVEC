@@ -1,3 +1,9 @@
-*
+!
 !public/
 !.gitignore
+storage/app/appli/*
+storage/app/documents/*
+storage/app/mpdf/*
+!storage/app/appli/
+!storage/app/documents/
+!storage/app/mpdf/

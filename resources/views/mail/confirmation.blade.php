@@ -21,7 +21,10 @@
           </mj-text>
           <mj-divider border-color="#F45E43"></mj-divider>
           <mj-text font-size="16px" color="#333333" font-family="Helvetica, Arial, sans-serif">
-            Nous vous remercions pour votre demande et nous reviendrons vers vous dans les plus brefs délais.
+            Nous vous remercions pour votre demande.
+          </mj-text>
+          <mj-text font-size="16px" color="#333333" font-family="Helvetica, Arial, sans-serif">
+            En cas de problème, vous pouvez nous contacter à l'adresse : <strong>culture@crous-versailles.fr</strong>
           </mj-text>
           <mj-text font-size="16px" color="#333333" font-family="Helvetica, Arial, sans-serif">
             Cordialement,<br>

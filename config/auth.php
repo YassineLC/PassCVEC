@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'backoffice' => [
+        'driver' => 'session',
+        'provider' => 'backoffice_users',
+        ],
     ],
 
     /*
@@ -60,9 +64,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+        'backoffice_users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\BackofficeUser::class,
         ],
 
         // 'users' => [

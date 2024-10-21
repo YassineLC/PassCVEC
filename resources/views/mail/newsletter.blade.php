@@ -4,7 +4,7 @@
         <mj-section>
           <mj-column>
             <mj-text>
-              {{!! $content !!}}
+              <?php /*{{!! $content !!}}*/?>
             </mj-text>
           </mj-column>
         </mj-section>

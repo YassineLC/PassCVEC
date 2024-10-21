@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Backoffice</title>
+    <title>Inscription - Backoffice Crous de Versailles</title>
     <style>
         @font-face {
             font-family: 'Marianne';
@@ -19,7 +19,7 @@
             height: 100vh;
             margin: 0;
         }
-        .login-container {
+        .register-container {
             background-color: white;
             padding: 2rem;
             border-radius: 8px;
@@ -58,7 +58,7 @@
             font-weight: 600;
         }
         button:hover {
-            background-color: #1212ff;
+            background-color: #dc3545;
         }
         .error {
             color: #ff0000;
@@ -67,22 +67,32 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h1>Connexion</h1>
+    <div class="register-container">
+        <h1>Inscription Backoffice</h1>
         @if ($errors->any())
             <div class="error">
-                {{ $errors->first() }}
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
-        <form method="POST" action="{{ route('backoffice.login') }}">
+        <form method="POST" action="{{ route('backoffice.register') }}">
             @csrf
+            <label for="name">Nom</label>
+            <input type="text" id="name" name="name" required autofocus>
+
             <label for="email">Adresse e-mail</label>
-            <input type="email" id="email" name="email" required autofocus>
+            <input type="email" id="email" name="email" required>
 
             <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit">Se connecter</button>
+            <label for="password_confirmation">Confirmer le mot de passe</label>
+            <input type="password" id="password_confirmation" name="password_confirmation" required>
+
+            <button type="submit">S'inscrire</button>
         </form>
     </div>
 </body>

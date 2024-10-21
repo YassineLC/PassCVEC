@@ -9,6 +9,7 @@ use App\Http\Controllers\CreateMailController;
 use App\Http\Controllers\BackOfficeDemandeController;
 use App\Http\Controllers\MentionsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegisterController;
 
 Route::get('/', [PostController::class, 'index'])->name('form');
 Route::post('/store-form', [PostController::class, 'store'])->name('store-form');
@@ -16,6 +17,8 @@ Route::get('/aide', [AideController::class, 'index'])->name('aide');
 Route::get('/mentions-legales', [MentionsController::class, 'index'])->name('mentions-legales');
 
 Route::prefix('backoffice')->name('backoffice.')->group(function () {
+    Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('register', [RegisterController::class, 'register']);
     // Routes d'authentification
     Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AuthController::class, 'login']);

@@ -22,7 +22,7 @@
                 {{ session('success') }}
             </div>
         @endif
-        <p><a href="{{ route('aide') }}">Aide</a></p>
+        <p>En cas de problème, consultez la rubrique <a href="{{ route('aide') }}">d'aide</a></p>
         <div class="card">
             <div class="card-header text-center font-weight-bold">
                 Formulaire Pass CVEC
@@ -133,7 +133,7 @@
                     <!-- Certificat de scolarité -->
                     <div class="form-group">
                         <label for="InputCertificatScolarite">Certificat de scolarité
-                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Téléchargez votre certificat de scolarité"></i>
+                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Téléchargez votre certificat de scolarité (uniquement au format pdf)"></i>
                         </label>
                         <input type="file" name="scolarite" class="form-control" required>
                         @error("scolarite")
@@ -144,7 +144,7 @@
                     <!-- Attestation de paiement CVEC -->
                     <div class="form-group">
                         <label for="InputCertificatCVEC">Attestation de paiement CVEC
-                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Téléchargez votre attestation de paiement CVEC"></i>
+                            <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Téléchargez votre attestation de paiement CVEC (uniquement sous format numérique en pdf)"></i>
                         </label>
                         <input type="file" name="cvec" class="form-control" required>
                         @error("cvec")

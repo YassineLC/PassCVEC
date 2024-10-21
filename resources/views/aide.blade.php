@@ -23,7 +23,7 @@
         </section>
         <section>
             <h2>Contact</h2>
-            <p>Pour tous cas particuliers, vous pouvez nous contacter à l'adresse : <a href="mailto:culture@crous-versailles.fr">culture@crous-versailles.fr</a></p>
+            <p>Pour tout cas particuliers, vous pouvez nous contacter à l'adresse : <a href="mailto:culture@crous-versailles.fr">culture@crous-versailles.fr</a></p>
         </section>
         <a href="{{ url()->previous() }}"><button class="btn btn-danger">Retour</button></a>
     </main>

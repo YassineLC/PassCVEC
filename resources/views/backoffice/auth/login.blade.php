@@ -56,9 +56,10 @@
             cursor: pointer;
             font-family: 'Marianne', sans-serif;
             font-weight: 600;
+            transition: ease-in-out 0.3s;
         }
         button:hover {
-            background-color: #1212ff;
+            background-color: #9c1616;
         }
         .error {
             color: #ff0000;

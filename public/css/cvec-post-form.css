@@ -62,3 +62,60 @@ footer.footer .nav-link:hover {
 footer.footer img.logo {
     height: 80px;
 }
+
+/* Supprimer les styles en double du footer et les consolider */
+html, body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Marianne', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+/* Remplacer tous les styles du footer par ceci */
+footer.footer {
+    padding: 10px 20px;
+    background-color: rgb(39, 42, 58);
+    color: white;
+    width: 100%;
+    /* Supprimer margin-top et margin-bottom */
+    position: relative; /* Ajouter ceci */
+    bottom: 0; /* Ajouter ceci */
+}
+
+footer.footer a.footer-brand {
+    color: white;
+}
+
+footer.footer .nav-link {
+    color: white;
+    text-align: center;
+    transition: 0.2s;
+}
+
+footer.footer .nav-link:hover {
+    color: #0056b3;
+}
+
+footer.footer img.logo {
+    height: 80px;
+}
+
+/* Ajouter ces nouvelles règles */
+.container.mt-4.mb-4 {
+    margin-bottom: 0 !important; /* Pour écraser les marges de Bootstrap */
+    padding-bottom: 0;
+}
+
+.card {
+    margin-bottom: 0;
+}

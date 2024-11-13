@@ -122,8 +122,8 @@
 <script type="module" src="{{ asset('js/pdfjs-dist/build/pdf.mjs') }}"></script>
 <script type="module">
     const pdfUrls = {
-        'scolarite': "{{ route('assets.pdf.scolarite', ['id' => $data['id']]) }}",
-        'cvec': "{{ route('assets.pdf.cvec', ['id' => $data['id']]) }}"
+        'scolarite': "{{ route('backoffice.assets.pdf.scolarite', ['id' => $data['id']]) }}",
+        'cvec': "{{ route('backoffice.assets.pdf.cvec', ['id' => $data['id']]) }}"
     };
     pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ asset('js/pdfjs-dist/build/pdf.worker.mjs') }}';
 

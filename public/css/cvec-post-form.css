@@ -1,12 +1,19 @@
 .text-danger {
     color: #aa4f58 !important;
-    background-color: #f8d7da;
+    background-color: #f7f8fa;
     padding: .70rem 1rem;
 }
 
 @font-face {
     font-family: 'Marianne';
     src: url('../fonts/Marianne/Marianne/fontes\ web/Marianne-Regular.woff') format('woff');
+}
+
+:root {
+    --vert: #d5e6a2;
+    --violet: #2a1429;
+    --rose-fuchsia: #ec008c;
+    --rouge: #ed1c24;
 }
 
 body {
@@ -110,12 +117,86 @@ footer.footer img.logo {
     height: 80px;
 }
 
-/* Ajouter ces nouvelles règles */
 .container.mt-4.mb-4 {
-    margin-bottom: 0 !important; /* Pour écraser les marges de Bootstrap */
+    margin-bottom: 0 !important;
     padding-bottom: 0;
 }
 
 .card {
     margin-bottom: 0;
+    border: none;
+}
+
+.card-header {
+    background-color: #D5E6A2;
+    color: #2e3236;
+    border-radius: 15px 15px 0 0 !important;
+    border: none;
+}
+
+.card-body {
+    border: 2px solid #D5E6A2;
+    border-radius: 0 0 10px 10px;
+    border-top: none;
+}
+
+.navbar-logo-center img {
+    max-height: 100px;
+}
+.footer-logos img {
+    max-height: 60px;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.footer .nav-link {
+    color: #333;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer .nav-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.alert-cvec, 
+.btn-primary {
+    background-color: #7F287F;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #662066; /* Version légèrement plus foncée pour le hover */
+    border: none;
+}
+
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #662066 !important;
+    border: none !important;
+    box-shadow: 0 0 0 0.2rem rgba(127, 40, 127, 0.25) !important;
+}
+
+.form-control {
+    border: 2px solid #D5E6A2;
+}
+
+.form-control:focus {
+    border-color: #D5E6A2;
+    box-shadow: 0 0 0 0.2rem rgba(213, 230, 162, 0.25);
+}
+
+.custom-select {
+    border: 2px solid #D5E6A2;
+}
+
+.custom-select:focus {
+    border-color: #D5E6A2;
+    box-shadow: 0 0 0 0.2rem rgba(213, 230, 162, 0.25);
 }

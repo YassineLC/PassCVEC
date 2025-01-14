@@ -7,14 +7,104 @@
     <link rel="stylesheet" href="{{ asset('css/cvec-post-form.css') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        /* Navbar */
+        .navbar {
+            background-size: cover;
+            background-position: center;
+            height: 150px; /* Hauteur de la navbar */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar-brand img {
+            max-height: 80px;
+        }
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ddd;
+        }
+
+        @media (min-width: 1025px) {
+            .navbar {
+                background-image: url('{{ asset('images/header-appli-cvec-1920x300.jpg') }}');
+            }
+        }
+        @media (min-width: 576px) and (max-width: 1024px) {
+            .navbar {
+                background-image: url('{{ asset('images/header-appli-cvec-1024x120.jpg') }}');
+            }
+        }
+        @media (max-width: 575px) {
+            .navbar {
+                background-image: url('{{ asset('images/header-appli-cvec-320x100.jpg') }}');
+            }
+        }
+
+        .navbar {
+            padding: 10px 20px;
+        }
+
+        .navbar-brand img {
+            max-height: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand img {
+                max-height: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
-        <a href="{{ route('form') }}" class="navbar-brand">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo Crous de Versailles" class="logo img-fluid">
-        <h1 class="navbar-brand">Pass CVEC</h1>
-        </a>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container d-flex justify-content-between align-items-center">
+            <!-- Groupe de logos à gauche -->
+            <div class="d-flex align-items-center">
+                <a href="{{ route('form') }}" class="navbar-brand d-flex align-items-center">
+                    <img src="{{ asset('images/Logo-Crous-V-150x150.png') }}"
+                         alt="Logo Crous de Versailles"
+                         class="logo img-fluid d-none d-md-block mr-3">
+                    <img src="{{ asset('images/Logo-Crous-V-80x80.png') }}"
+                         alt="Logo Crous de Versailles (petit)"
+                         class="logo img-fluid d-md-none mr-3">
+                    <!-- Logo Pass CVEC déplacé ici -->
+                    <img src="{{ asset('images/Votre-pass-cvec-250x150.png') }}"
+                         alt="Nouveau Logo CVEC"
+                         class="logo img-fluid" style="max-height: 50px;">
+                </a>
+            </div>
+
+            <!-- Logo "Financé par CVEC" à droite -->
+            <a href="{{ route('form') }}" class="navbar-brand d-flex align-items-center">
+                <img src="{{ asset('images/Logo-Finance-par-cvec-200x150.png') }}"
+                     alt="Logo Finance CVEC"
+                     class="logo img-fluid d-none d-md-block">
+                <img src="{{ asset('images/Logo-finance-cvec-100-80.png') }}"
+                     alt="Logo Finance CVEC (petit)"
+                     class="logo img-fluid d-md-none">
+            </a>
+        </div>
     </nav>
+
+    <div class="container mt-2 mb-4">
+        <div class="alert alert-danger text-center alert-cvec" role="alert">
+            <h2>Qu'est-ce que le Pass CVEC ?</h2>
+            <p>Le Pass CVEC est un dispositif permettant aux étudiants de bénéficier de services et d'aides spécifiques après le paiement de la Contribution Vie Étudiante et de Campus (CVEC).</p>
+
+            <h3>Conditions d'éligibilité</h3>
+            <ul class="text-left">
+                <li>Être inscrit dans un établissement d'enseignement supérieur</li>
+                <li>Avoir payé la contribution CVEC pour l'année universitaire en cours</li>
+                <li>Fournir un justificatif de scolarité valide</li>
+            </ul>
+
+            <p class="font-weight-bold">Attention : Tous les champs du formulaire sont obligatoires.</p>
+        </div>
+        <p>En cas de problème, consultez la rubrique <a href="{{ route('aide') }}">d'aide</a></p>
+    </div>
 
     <div class="container mt-4 mb-4">
         @if(session('success'))
@@ -22,10 +112,9 @@
                 {{ session('success') }}
             </div>
         @endif
-        <p>En cas de problème, consultez la rubrique <a href="{{ route('aide') }}">d'aide</a></p>
         <div class="card">
             <div class="card-header text-center font-weight-bold">
-                Formulaire Pass CVEC
+                Formulaire
             </div>
             <div class="card-body">
                 <form name="add-post-form" id="add-post-form" method="POST" action="{{ url('store-form') }}" enctype="multipart/form-data">
@@ -164,8 +253,22 @@
         </div>
     </div>
     <footer class="footer navbar navbar-expand-lg pb-4 pt-4">
-        <div class="mx-auto">
-            <a href="{{ route('mentions-legales') }}" class="nav-link">Mentions légales</a>
+        <div class="container position-relative">
+            <div class="w-100 text-center position-absolute" style="left: 0; z-index: 1;">
+                <a href="{{ route('mentions-legales') }}" class="nav-link font-weight-bold">Mentions légales</a>
+            </div>
+            
+            <!-- Logos (maintenu à droite) -->
+            <div class="d-flex align-items-center ml-auto">
+                <a href="{{ route('form') }}" class="navbar-brand d-flex align-items-center mr-3">
+                    <img src="{{ asset('images/Logo-Crous-V-150x150.png') }}" alt="Logo Crous de Versailles" class="logo img-fluid d-none d-md-block mr-3">
+                    <img src="{{ asset('images/Logo-Crous-V-80x80.png') }}" alt="Logo Crous de Versailles (petit)" class="logo img-fluid d-md-none mr-3">
+                </a>
+                <a href="{{ route('form') }}" class="navbar-brand d-flex align-items-center">
+                    <img src="{{ asset('images/Logo-Finance-par-cvec-200x150.png') }}" alt="Logo Finance CVEC" class="logo img-fluid d-none d-md-block mr-3">
+                    <img src="{{ asset('images/Logo-finance-cvec-100-80.png') }}" alt="Logo Finance CVEC (petit)" class="logo img-fluid d-md-none mr-3">
+                </a>
+            </div>
         </div>
     </footer>
 

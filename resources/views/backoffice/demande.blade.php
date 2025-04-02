@@ -8,6 +8,85 @@
     <link rel="stylesheet" href="{{ asset('css/demande.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <style>
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .pdf-modal {
+            position: fixed;
+            top: 5%;
+            left: 5%;
+            right: 5%;
+            bottom: 5%;
+            background-color: white;
+            z-index: 1001;
+            display: none;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pdf-modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .pdf-modal-title {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+        
+        .pdf-modal-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto; /* Permet le défilement vertical */
+            background-color: #f8f9fa;
+        }
+        
+        .pdf-modal-footer {
+            padding: 15px;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .close-overlay {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        #pdfViewer canvas {
+            margin: 0 auto 15px auto !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
 
@@ -86,13 +165,28 @@
             </tr>
             <tr>
                 <td>Certificat de scolarité</td>
-                <td><button id="openScolaritePdf" class="openPdf btn btn-primary" data-type="scolarite">Ouvrir le PDF</button></td>
+                <td>
+                    @if($has_scolarite)
+                        <button id="openScolaritePdf" class="openPdf btn btn-primary" data-type="scolarite">Ouvrir le PDF</button>
+                    @else
+                        <span class="text-muted">Non disponible</span>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Attestation de paiement CVEC</td>
-                <td><button id="openCvecPdf" class="openPdf btn btn-primary" data-type="cvec">Ouvrir le PDF</button></td>
+                <td>
+                    @if($needs_cvec)
+                        @if($has_cvec)
+                            <button id="openCvecPdf" class="openPdf btn btn-primary" data-type="cvec">Ouvrir le PDF</button>
+                        @else
+                            <span class="text-muted">Non disponible</span>
+                        @endif
+                    @else
+                        <span class="text-muted">Non requis (résident)</span>
+                    @endif
+                </td>
             </tr>
-
         </table>
         <form action="{{ route('backoffice.updateRequestStatus', ['id' => $data['id']]) }}" method="POST">
             @csrf
@@ -114,68 +208,148 @@
 <div class="modal-overlay" id="overlay">
     <span class="close-overlay">&times;</span>
 </div>
-<div class="modal" id="pdfModal">
-    <iframe id="pdfIframe"></iframe>
-    <button id="openInNewTabBtn" class="btn btn-primary">Ouvrir dans un nouvel onglet</button>
+
+<div class="pdf-modal" id="pdfModal">
+    <div class="pdf-modal-header">
+        <h5 class="pdf-modal-title" id="pdfTitle">Visualisation du document</h5>
+        <button type="button" class="close-btn" id="closeModalBtn">&times;</button>
+    </div>
+    <div class="pdf-modal-body">
+        <div id="pdfViewer"></div>
+    </div>
+    <div class="pdf-modal-footer">
+        <button id="openInNewTabBtn" class="btn btn-primary">Ouvrir dans un nouvel onglet</button>
+        <button id="closePdfBtn" class="btn btn-secondary">Fermer</button>
+    </div>
 </div>
 
-<script type="module" src="{{ asset('js/pdfjs-dist/build/pdf.mjs') }}"></script>
 <script type="module">
-    const pdfUrls = {
-        'scolarite': "{{ route('backoffice.assets.pdf.scolarite', ['id' => $data['id']]) }}",
-        'cvec': "{{ route('backoffice.assets.pdf.cvec', ['id' => $data['id']]) }}"
-    };
+    import * as pdfjsLib from '{{ asset('js/pdfjs-dist/build/pdf.mjs') }}';
+    
     pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ asset('js/pdfjs-dist/build/pdf.worker.mjs') }}';
-
-    async function renderPdfInIframe(pdfUrl) {
-        const pdfIframe = document.getElementById('pdfIframe');
-        pdfIframe.src = pdfUrl;
+    
+    // Définir les URLs pour les PDFs
+    const pdfUrls = {};
+    const pdfTitles = {};
+    
+    @if($has_scolarite)
+    pdfUrls.scolarite = "{{ route('backoffice.assets.pdf.scolarite', ['id' => $data->id]) }}";
+    pdfTitles.scolarite = "Certificat de scolarité";
+    @endif
+    
+    @if($needs_cvec && $has_cvec)
+    pdfUrls.cvec = "{{ route('backoffice.assets.pdf.cvec', ['id' => $data->id]) }}";
+    pdfTitles.cvec = "Attestation de paiement CVEC";
+    @endif
+    
+    let currentPdfDocument = null;
+    let lastClickedPdfType = null;
+    
+    // Fonction pour rendre le PDF avec PDF.js
+    async function renderPdfWithPdfjs(pdfUrl, pdfType) {
+        const container = document.getElementById('pdfViewer');
+        const pdfTitle = document.getElementById('pdfTitle');
+        
+        // Mettre à jour le titre du modal
+        pdfTitle.textContent = pdfTitles[pdfType] || "Visualisation du document";
+        
+        container.innerHTML = '';
+        
+        try {
+            // Afficher un message de chargement
+            container.innerHTML = '<div class="text-center p-5"><div class="spinner-border" role="status"></div><p class="mt-2">Chargement du PDF...</p></div>';
+            
+            // Charger le document PDF
+            const loadingTask = pdfjsLib.getDocument(pdfUrl);
+            currentPdfDocument = await loadingTask.promise;
+            
+            // Vider le conteneur après le chargement
+            container.innerHTML = '';
+            
+            // Afficher chaque page du PDF
+            for (let pageNum = 1; pageNum <= currentPdfDocument.numPages; pageNum++) {
+                const page = await currentPdfDocument.getPage(pageNum);
+                
+                // Créer un canvas pour la page
+                // Utiliser une échelle plus grande pour une meilleure qualité
+                const scale = 1.8;
+                const viewport = page.getViewport({ scale: scale });
+                const canvas = document.createElement('canvas');
+                canvas.style.display = 'block';
+                canvas.style.margin = '10px auto';
+                canvas.style.border = '1px solid #ddd';
+                container.appendChild(canvas);
+                
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                // Rendre la page dans le canvas
+                await page.render({
+                    canvasContext: context,
+                    viewport: viewport
+                }).promise;
+                
+                // Ajouter un peu d'espace entre les pages
+                if (pageNum < currentPdfDocument.numPages) {
+                    const spacer = document.createElement('div');
+                    spacer.style.height = '20px';
+                    container.appendChild(spacer);
+                }
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement du PDF:', error);
+            container.innerHTML = `<div class="alert alert-danger">Erreur lors du chargement du PDF: ${error.message}</div>`;
+        }
     }
-
+    
+    // Gestionnaires d'événements pour les boutons
     const openPdfLinks = document.querySelectorAll('.openPdf');
-
+    
     openPdfLinks.forEach(link => {
         link.addEventListener('click', async function(event) {
             event.preventDefault();
-            const type = link.dataset.type;
-            const pdfUrl = pdfUrls[type];
-            overlay.style.display = 'block';
-            pdfModal.style.display = 'block';
-            await renderPdfInIframe(pdfUrl);
+            const type = this.dataset.type;
+            lastClickedPdfType = type;
+            
+            if (pdfUrls[type]) {
+                const overlay = document.getElementById('overlay');
+                const pdfModal = document.getElementById('pdfModal');
+                
+                overlay.style.display = 'block';
+                pdfModal.style.display = 'flex';
+                await renderPdfWithPdfjs(pdfUrls[type], type);
+            }
         });
     });
-
-    let lastClickedPdfType = null; // Variable pour stocker le dernier type de PDF cliqué
-
-    openPdfLinks.forEach(link => {
-        link.addEventListener('click', async function(event) {
-            event.preventDefault();
-            const type = link.dataset.type;
-            lastClickedPdfType = type; // Enregistrer le type du PDF cliqué
-            const pdfUrl = pdfUrls[type];
-            overlay.style.display = 'block';
-            pdfModal.style.display = 'block';
-            await renderPdfInIframe(pdfUrl);
-        });
-    });
-
+    
+    // Gestionnaire pour le bouton "Ouvrir dans un nouvel onglet"
     const openInNewTabBtn = document.getElementById('openInNewTabBtn');
     openInNewTabBtn.addEventListener('click', function() {
-        if (lastClickedPdfType) {
-            const pdfUrl = pdfUrls[lastClickedPdfType]; // Utiliser le type du dernier PDF cliqué
-            window.open(pdfUrl, '_blank');
+        if (lastClickedPdfType && pdfUrls[lastClickedPdfType]) {
+            window.open(pdfUrls[lastClickedPdfType], '_blank');
         }
     });
-
-    const overlay = document.getElementById('overlay');
-    const pdfModal = document.getElementById('pdfModal');
-
-    overlay.addEventListener('click', function() {
-        overlay.style.display = 'none';
-        pdfModal.style.display = 'none';
-        // Pour arrêter le chargement du PDF lors de la fermeture du modal
-        document.getElementById('pdfIframe').src = '';
-    });
+    
+    // Fonction pour fermer le modal et nettoyer les ressources
+    function closeModal() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('pdfModal').style.display = 'none';
+        
+        // Nettoyer les ressources
+        if (currentPdfDocument) {
+            currentPdfDocument.destroy();
+            currentPdfDocument = null;
+        }
+        
+        // Vider le conteneur du PDF
+        document.getElementById('pdfViewer').innerHTML = '';
+    }
+    
+    // Gestionnaires pour fermer le modal
+    document.getElementById('overlay').addEventListener('click', closeModal);
+    document.getElementById('closePdfBtn').addEventListener('click', closeModal);
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
 </script>
 
 </body>

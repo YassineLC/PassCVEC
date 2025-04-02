@@ -8,7 +8,6 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <style>
-        /* Navbar */
         .navbar {
             background-size: cover;
             background-position: center;
@@ -61,7 +60,6 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container d-flex justify-content-between align-items-center">
-            <!-- Groupe de logos à gauche -->
             <div class="d-flex align-items-center">
                 <a href="{{ route('form') }}" class="navbar-brand d-flex align-items-center">
                     <img src="{{ asset('images/Logo-Crous-V-150x150.png') }}"
@@ -70,14 +68,12 @@
                     <img src="{{ asset('images/Logo-Crous-V-80x80.png') }}"
                          alt="Logo Crous de Versailles (petit)"
                          class="logo img-fluid d-md-none mr-3">
-                    <!-- Logo Pass CVEC déplacé ici -->
                     <img src="{{ asset('images/Votre-pass-cvec-250x150.png') }}"
                          alt="Nouveau Logo CVEC"
                          class="logo img-fluid" style="max-height: 50px;">
                 </a>
             </div>
 
-            <!-- Logo "Financé par CVEC" à droite -->
             <a href="{{ route('form') }}" class="navbar-brand d-flex align-items-center">
                 <img src="{{ asset('images/Logo-Finance-par-cvec-200x150.png') }}"
                      alt="Logo Finance CVEC"
@@ -112,6 +108,13 @@
                 {{ session('success') }}
             </div>
         @endif
+        
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+        
         <div class="card">
             <div class="card-header text-center font-weight-bold">
                 Formulaire
@@ -119,7 +122,6 @@
             <div class="card-body">
                 <form name="add-post-form" id="add-post-form" method="POST" action="{{ url('store-form') }}" enctype="multipart/form-data">
                     @csrf
-                    <!-- Nom -->
                     <div class="form-group">
                         <label for="InputNom">Nom</label>
                         <input type="text" id="nom" name="nom" class="form-control" required value="{{ old('nom') }}" placeholder="Nom">
@@ -128,7 +130,6 @@
                         @enderror
                     </div>
 
-                    <!-- Prénom -->
                     <div class="form-group">
                         <label for="InputPrenom">Prénom</label>
                         <input type="text" id="prenom" name="prenom" class="form-control" required value="{{ old('prenom') }}" placeholder="Prénom">
@@ -137,7 +138,6 @@
                         @enderror
                     </div>
 
-                    <!-- INE -->
                     <div class="form-group">
                         <label for="InputINE">INE
                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Votre numéro INE (Identifiant National Étudiant)"></i>
@@ -148,7 +148,6 @@
                         @enderror
                     </div>
 
-                    <!-- Email -->
                     <div class="form-group">
                         <label for="InputEmail">Email
                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Votre adresse email"></i>
@@ -159,7 +158,6 @@
                         @enderror
                     </div>
 
-                    <!-- Résidence Crous -->
                     <div class="form-group" id="residence-radio">
                         <label for="resident_crous">Êtes-vous en résidence Crous ?</label>
                         <div class="form-check">
@@ -172,7 +170,6 @@
                         </div>
                     </div>
 
-                    <!-- Adresse -->
                     <div class="form-group" id="adresse-div">
                         <label for="InputAdresse">Adresse
                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Votre adresse postale"></i>
@@ -185,7 +182,6 @@
 
                     <input type="hidden" id="is_in_residence" name="is_in_residence" value="true">
 
-                    <!-- Sélection de la résidence -->
                     <div class="form-group" id="div-logements">
                         <label for="residence">Résidence
                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Sélectionnez votre résidence"></i>
@@ -201,7 +197,6 @@
                         @enderror
                     </div>
 
-                    <!-- Numéro de chambre -->
                     <div class="form-group" id="room-number-fields">
                         <label for="numero_chambre">Numéro de chambre
                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Le numéro de chambre est nécessaire lors de l'envoi du pass"></i>
@@ -209,8 +204,6 @@
                         <input type="text" id="numero_chambre" name="numero_chambre" class="form-control">
                     </div>
 
-
-                    <!-- Complément d'adresse -->
                     <div class="form-group" id="address-fields">
                         <label for="code_postal">Code postal</label>
                         <input type="text" id="code_postal" name="code_postal" class="form-control" value="{{ old('code_postal') }}">
@@ -218,8 +211,6 @@
                         <input type="text" id="ville" name="ville" class="form-control" value="{{ old('ville') }}">
                     </div>
 
-
-                    <!-- Certificat de scolarité -->
                     <div class="form-group">
                         <label for="InputCertificatScolarite">Certificat de scolarité
                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Téléchargez votre certificat de scolarité (uniquement au format pdf)"></i>
@@ -230,21 +221,19 @@
                         @enderror
                     </div>
 
-                    <!-- Attestation de paiement CVEC -->
-                    <div class="form-group">
+                    <div class="form-group" id="cvec-upload-group" style="display: none;">
                         <label for="InputCertificatCVEC">Attestation de paiement CVEC
                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-placement="right" title="Téléchargez votre attestation de paiement CVEC (uniquement sous format numérique en pdf)"></i>
                         </label>
-                        <input type="file" name="cvec" class="form-control" required>
+                        <input type="file" name="cvec" class="form-control">
                         @error("cvec")
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <!-- Newsletter -->
                     <div class="form-group form-check mt-4">
-                        <input class="form-check-input" type="checkbox" name="newsletter" value="">
-                        <label for="newsletter_subscription form-check-label">Je souhaite recevoir la newsletter du pass CVEC</label>
+                        <input class="form-check-input" type="checkbox" name="newsletter" value="opt_out">
+                        <label for="newsletter_subscription form-check-label">Je ne souhaite pas recevoir la newsletter du pass CVEC</label>
                     </div>
                     <p class="text-right" id="obligatoires">Tous les champs sont obligatoires</p>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
@@ -258,7 +247,6 @@
                 <a href="{{ route('mentions-legales') }}" class="nav-link font-weight-bold">Mentions légales</a>
             </div>
             
-            <!-- Logos (maintenu à droite) -->
             <div class="d-flex align-items-center ml-auto">
                 <a href="{{ route('form') }}" class="navbar-brand d-flex align-items-center mr-3">
                     <img src="{{ asset('images/Logo-Crous-V-150x150.png') }}" alt="Logo Crous de Versailles" class="logo img-fluid d-none d-md-block mr-3">
@@ -279,6 +267,20 @@
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
+            
+            // Gestion de l'affichage du champ CVEC
+            $('input[name="resident_crous"]').change(function() {
+                const cvecGroup = $('#cvec-upload-group');
+                const cvecInput = cvecGroup.find('input[name="cvec"]');
+                
+                if ($(this).val() === 'non') {
+                    cvecGroup.show();
+                    cvecInput.prop('required', true);
+                } else {
+                    cvecGroup.hide();
+                    cvecInput.prop('required', false);
+                }
+            });
         });
     </script>
 </body>

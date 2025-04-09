@@ -1,86 +1,30 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('css/backoffice.css') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <title>Pass CVEC - BackOffice</title>
-</head>
-<body>
+@extends('backoffice.layouts.app')
 
-<header>
-    @include('backoffice/_navbar')
-</header>
+@section('title', 'Tableau de bord - Pass CVEC BackOffice')
 
-<div class="container-fluid">
-
-    <div class="d-flex justify-content-start mb-4 status-card-container">
-        <div class="status-card status-green" data-filter="A traiter">
-            <h3>{{ $incomingRequests ?? 0 }}</h3>
-            <p>Demandes à traiter</p>
-        </div>
-        <div class="status-card status-orange" data-filter="En cours">
-            <h3>{{ $pendingRequests ?? 0 }}</h3>
-            <p>Demandes en cours</p>
-        </div>
-        <div class="status-card status-red" data-filter="Traité">
-            <h3>{{ $assignedRequests ?? 0 }}</h3>
-            <p>Demandes traités</p>
-        </div>
-    </div>
+@section('content')
+    @include('backoffice.components.status-cards')
 
     <div class="content-wrapper">
         <div class="sticky-top">
-            <div class="filter-container">
-                <form method="GET" action="{{ route('backoffice.index') }}" class="form-inline flex-wrap">
-                    <div class="form-group mr-3 mb-2">
-                        <label for="nom" class="mr-1">Nom:</label>
-                        <input type="text" name="nom" id="nom" class="form-control" value="{{ request('nom') }}">
-                    </div>
-                    <div class="form-group mr-3 mb-2">
-                        <label for="prenom" class="mr-1">Prénom:</label>
-                        <input type="text" name="prenom" id="prenom" class="form-control" value="{{ request('prenom') }}">
-                    </div>
-                    <div class="form-group mr-3 mb-2">
-                        <label for="ine" class="mr-1">INE:</label>
-                        <input type="text" name="ine" id="ine" class="form-control" value="{{ request('ine') }}">
-                    </div>
-                    <div class="form-group mr-3 mb-2">
-                        <label for="id" class="mr-1">ID:</label>
-                        <input type="text" name="id" id="id" class="form-control" value="{{ request('id') }}">
-                    </div>
-                    <div class="form-group mr-3 mb-2">
-                        <label for="statut" class="mr-1">Statut: </label>
-                        <select id="statut" name="statut" class="form-control w-auto" style="width: auto;">
-                            <option value="" disabled selected></option>
-                            <option value="A traiter">A traiter</option>
-                            <option value="En cours">En cours</option>
-                            <option value="Traité">Traité</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-2">
-                        <button type="submit" class="btn btn-primary mr-2">Rechercher</button>
-                        <a href="{{ route('backoffice.index') }}" class="btn btn-secondary">Réinitialiser</a>
-                    </div>
-                </form>
+            @include('backoffice.components.search-filter')
 
-
-                <form action="{{ route('backoffice.updateStatus') }}" method="POST">
-                    @csrf
-                    <div class="mt-3 d-flex align-items-center">
-                        <label for="status" class="form-label mr-2">Changer le statut des demandes sélectionnées :</label>
-                        <select id="status" name="status" class="form-control form-control-sm w-auto mr-2" style="width: auto;" required>
-                            <option value="" disabled selected></option>
-                            <option value="A traiter">A traiter</option>
-                            <option value="En cours">En cours</option>
-                            <option value="Traité">Traité</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary">Mettre à jour</button>
-                    </div>
+            <form action="{{ route('backoffice.updateStatus') }}" method="POST">
+                @csrf
+                <div class="mt-3 d-flex align-items-center">
+                    <label for="status" class="form-label mr-2">Changer le statut des demandes sélectionnées :</label>
+                    <select id="status" name="status" class="form-control form-control-sm w-auto mr-2" style="width: auto;" required>
+                        <option value="" disabled selected></option>
+                        <option value="A traiter">A traiter</option>
+                        <option value="En cours">En cours</option>
+                        <option value="Traité">Traité</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Mettre à jour</button>
                 </div>
-            </div>
+                @foreach(request()->all() as $key => $value)
+                    <input type="hidden" name="redirect_params[{{ $key }}]" value="{{ $value }}">
+                @endforeach
+            </form>
 
             <table class="table table-striped table-bordered mb-3">
                 <thead class="thead-dark">
@@ -131,30 +75,12 @@
                 </tbody>
             </table>
 
-            <div class="table-footer">
-                <form action="{{ route('backoffice.index') }}" method="GET">
-                    <div class="footer-left">
-                        <select name="rowsPerPage" class="form-control form-control-sm" style="width: auto;" onchange="this.form.submit()">
-                            <option value="25" {{ $allRequests->perPage() == 25 ? 'selected' : '' }}>25</option>
-                            <option value="50" {{ $allRequests->perPage() == 50 ? 'selected' : '' }}>50</option>
-                            <option value="75" {{ $allRequests->perPage() == 75 ? 'selected' : '' }}>75</option>
-                            <option value="100" {{ $allRequests->perPage() == 100 ? 'selected' : '' }}>100</option>
-                        </select>
-                        <span>lignes / page</span>
-                    </div>
-                </form>
-                <div class="footer-center">
-                    De {{ $allRequests->firstItem() }} à {{ $allRequests->lastItem() }} sur {{ $allRequests->total() }} lignes
-                </div>
-                <div class="footer-right">
-                    {{ $allRequests->links() }}
-                </div>
-            </div>
-
+            @include('backoffice.components.pagination', ['paginator' => $allRequests])
         </div>
     </div>
-</div>
+@endsection
 
+@section('additional_js')
 <script>
     document.getElementById('select-all').addEventListener('click', function(event) {
         const checkboxes = document.querySelectorAll('input[name="demande_ids[]"]');
@@ -162,16 +88,5 @@
             checkbox.checked = event.target.checked;
         });
     });
-
-    document.querySelectorAll('.status-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const filterValue = this.getAttribute('data-filter');
-            const url = new URL(window.location.href);
-            url.searchParams.set('statut', filterValue);
-            window.location.href = url.toString();
-        });
-    });
 </script>
-
-</body>
-</html>
+@endsection

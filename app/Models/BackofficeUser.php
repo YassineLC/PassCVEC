@@ -2,19 +2,39 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class BackofficeUser extends Authenticatable
+class BackofficeUser extends Model
 {
-    use Notifiable;
+    use HasFactory;
+
+    protected $table = 'backoffice_users';
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'given_name',
+        'surname',
+        'email',
+        'matricule',
+        'function',
+        'affiliation',
+        'establishment',
+        'postal_code',
+        'eppn',
+        'display_name',
+        'cn',
+        'unscoped_affiliation',
+        'uid',
+        'remote_user',
+        'role',
+        'is_active',
+        'last_login_at'
     ];
 
-    protected $hidden = [
-        'password', 'remember_token',
+    protected $casts = [
+        'is_active' => 'boolean',
+        'last_login_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
-
 }
